@@ -14,6 +14,7 @@ public class Guerreiro extends Jogador {
         System.out.println("3- Ataque Giratório");
         System.out.println("4- Golpe de Espada");
         int option = scanner.nextInt();
+        System.out.println("");
 
         switch (option) {
             case 1:
@@ -34,7 +35,8 @@ public class Guerreiro extends Jogador {
                 break;
             default:
                 System.out.println("Opção inválida!!");
-                break;
+                ataque(inimigo);
+                return;
 
         }
     }
@@ -48,12 +50,12 @@ public class Guerreiro extends Jogador {
         switch (option) {
             case 1:
                 System.out.println("Posição de defesa");
-                defender(inimigo);
+                //defender(inimigo);
                 break;
 
             case 2:
                 System.out.println("Você optou desviar do ataque inimigo");
-                defender(inimigo);
+                //defender(inimigo);
                 break;
             default:
                 System.out.println("Opção inválida!!");
