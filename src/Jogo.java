@@ -1,78 +1,95 @@
-import java.util.Random;
+import java.util.Scanner;
 
-public class Jogo {
-    private Inimigo inimigo;
+class Jogo {
     private Jogador jogador;
+    private Inimigo inimigo;
 
     public Jogo(Inimigo inimigo, Jogador jogador) {
         this.inimigo = inimigo;
         this.jogador = jogador;
     }
 
-    public Inimigo getInimigo() {
-        return inimigo;
+    private void pontosDeVida(Inimigo inimigo , Jogador jogador){
+        System.out.println("\nPontos de vida Inimigo: " + inimigo.getVida());
+        System.out.println("Pontos de vida" + jogador.getClass().getSimpleName() +": " + jogador.getVida());
     }
 
-    public void setInimigo(Inimigo inimigo) {
-        this.inimigo = inimigo;
-    }
+    public void iniciarJogo() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Bem-vindo ao RPG!");
+        System.out.println("Escolha sua classe: ");
+        System.out.println("1. Guerreiro");
+        System.out.println("2. Mago");
+        int escolha = scanner.nextInt();
 
-    public Jogador getJogador() {
-        return jogador;
-    }
-
-    public void setJogador(Jogador jogador) {
-        this.jogador = jogador;
-    }
-
-    public void iniciarJogo(int opcao) {
-        if (opcao == 1) {
-            System.out.println("Seja bem-vindo GUERREIRO, vamos iniciar sua batalha ");
-            iniciarBatalha( "G");
-        } else {
-            System.out.println("Seja bem-vindo MAGO, vamos iniciar sua batalha ");
-            iniciarBatalha("M");
+        switch (escolha) {
+            case 1:
+                System.out.println("Seja bem-vindo GUERREIRO, vamos iniciar sua batalha ");
+                break;
+            case 2:
+                System.out.println("Seja bem-vindo MAGO, vamos iniciar sua batalha ");
+                break;
+            default:
+                System.out.println("Escolha inválida. Por favor, tente novamente.");
+                iniciarJogo();
+                return;
         }
+
+        System.out.println("Iniciando batalha...");
+        iniciarBatalha(escolha);
     }
 
-    private int gerarValoresAleatorios() {
-        Random random = new Random();
-        return random.nextInt(20) + 1;
-    }
+    private void iniciarBatalha(int escolha) {
+        Guerreiro guerreiro = new Guerreiro();
+        Mago mago = new Mago();
 
-    public void iniciarBatalha( String type) {
+        while (inimigo.estaVivo() != 0 && (guerreiro.estaVivo() != 0 || mago.estaVivo() != 0)) {
+            System.out.println("\n=========================");
+            if (escolha == 1) {
+                System.out.println("\nRodada do Jogador");
+                guerreiro.ataque(inimigo);
 
-        int iniJogador, iniInimigo;
-
-        while (inimigo.estaVivo() != 0 && jogador.estaVivo() != 0) {
-            System.out.println("=========================");
-
-            iniJogador = gerarValoresAleatorios();
-            iniInimigo = gerarValoresAleatorios();
-
-            if (iniJogador != iniInimigo){
-                System.out.println("Iniciativa do Jogador: " + iniJogador);
-                System.out.println("Iniciativa do Inimigo: " + iniInimigo);
-                if (type.equals("G")) {
-                    Guerreiro guerreiro = new Guerreiro();
-                    if (iniJogador > iniInimigo) {
-                        guerreiro.ataque(inimigo);
-                        inimigo.defender(guerreiro);
-                    } else {
-                        guerreiro.defesa(inimigo);
-                        inimigo.atacar(guerreiro);
-                    }
-                } else {
-                    Mago mago = new Mago();
-                    if (iniJogador > iniInimigo) {
-                        mago.ataque(inimigo);
-                        inimigo.defender(mago);
-                    } else {
-                        mago.defesa(inimigo);
-                        inimigo.atacar(mago);
-                    }
+                if (inimigo.estaVivo() <= 0) {
+                    System.out.println("\nVocê derrotou o inimigo!");
+                    pontosDeVida(inimigo, guerreiro);
+                    return;
                 }
+
+                System.out.println("\nRodada do Inimigo");
+                inimigo.atacar(guerreiro);
+
+                if (guerreiro.estaVivo() <= 0) {
+                    System.out.println("\nGuerreiro foi derrotado");
+
+                    pontosDeVida(inimigo, guerreiro);
+                    return;
+                }
+
+                pontosDeVida(inimigo, guerreiro);
+
+            } else {
+                System.out.println("\nRodada do Jogador");
+                mago.ataque(inimigo);
+
+                if (inimigo.estaVivo() == 0) {
+                    System.out.println("\nVocê derrotou o inimigo!");
+                    pontosDeVida(inimigo, mago);
+                    return;
+                }
+
+                System.out.println("\nRodada do Inimigo");
+                inimigo.atacar(mago);
+
+                if (guerreiro.estaVivo() <= 0) {
+                    System.out.println("\nMago foi derrotado");
+                    pontosDeVida(inimigo, mago);
+                    return;
+                }
+
+                pontosDeVida(inimigo, mago);
+
             }
+
         }
     }
 }

@@ -14,6 +14,7 @@ public class Mago extends Jogador {
 		System.out.println("3- Explosão de Gelo");
 		System.out.println("4- Míssil Mágico");
 		int option = scanner.nextInt();
+		System.out.println("");
 
 		switch (option) {
 			case 1:
@@ -34,6 +35,8 @@ public class Mago extends Jogador {
 				break;
 			default:
 				System.out.println("Opção inválida!");
+				ataque(inimigo);
+				return;
 		}
 	}
 
@@ -46,11 +49,11 @@ public class Mago extends Jogador {
 		switch (option) {
 			case 1:
 				System.out.println("Escudo Mágico ativado!");
-				defender(inimigo);
+				//defender(inimigo);
 				break;
 			case 2:
 				System.out.println("Teleporte ativado!");
-				defender(inimigo);
+				//defender(inimigo);
 				break;
 			default:
 				System.out.println("Opção inválida!");
