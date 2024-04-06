@@ -6,7 +6,7 @@ public class Jogador {
     private int defesa;
 
     public Jogador() {
-        this.vida = 10;
+        this.vida = 30;
     }
 
     private int gerarValoresAleatorios() {
@@ -38,23 +38,23 @@ public class Jogador {
         this.ataque = ataque;
     }
 
-    public void atacar(Inimigo inimigo) {
+    public void atacar(Jogador jogador) {
 
         setAtaque(gerarValoresAleatorios());
-        inimigo.setDefesa(gerarValoresAleatorios());
+        jogador.setDefesa(gerarValoresAleatorios());
 
-        int defesaInimigo = inimigo.getDefesa();
-        int vidaInimigo = inimigo.getVida();
+        int defesaOponente = jogador.getDefesa();
+        int vidaOponente = jogador.getVida();
         int ataqueJogador = getAtaque();
 
-        int dano = ataqueJogador - defesaInimigo;
+        int dano = ataqueJogador - defesaOponente;
         System.out.println("Ataque " + getClass().getSimpleName() + ": "  + ataqueJogador);
-        System.out.println("Defesa Inimigo: " + defesaInimigo);
+        System.out.println("Defesa " + jogador.getClass().getSimpleName() + ": " + defesaOponente);
 
-        if (ataqueJogador > defesaInimigo) {
-            vidaInimigo -= dano;
+        if (ataqueJogador > defesaOponente) {
+            vidaOponente -= dano;
                       System.out.println("Você acertou o inimigo!");
-            inimigo.setVida(vidaInimigo <= 0 ? 0 : vidaInimigo);
+            jogador.setVida(vidaOponente <= 0 ? 0 : vidaOponente);
         } else {
             System.out.println("Você errou o ataque!");
         }

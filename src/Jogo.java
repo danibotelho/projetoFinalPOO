@@ -9,18 +9,35 @@ class Jogo {
         this.jogador = jogador;
     }
 
-    private void pontosDeVida(Inimigo inimigo , Jogador jogador){
+    private void pontosDeVida(Inimigo inimigo, Jogador jogador) {
         System.out.println("\nPontos de vida Inimigo: " + inimigo.getVida());
-        System.out.println("Pontos de vida" + jogador.getClass().getSimpleName() +": " + jogador.getVida());
+        System.out.println("Pontos de vida " + jogador.getClass().getSimpleName() + ": " + jogador.getVida());
     }
 
     public void iniciarJogo() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Bem-vindo ao RPG!");
-        System.out.println("Escolha sua classe: ");
-        System.out.println("1. Guerreiro");
-        System.out.println("2. Mago");
-        int escolha = scanner.nextInt();
+
+        int escolha = 0;
+        boolean entradaValida = false;
+
+        while (!entradaValida) {
+            System.out.println("Escolha sua classe: ");
+            System.out.println("1. Guerreiro");
+            System.out.println("2. Mago");
+            if (scanner.hasNextInt()) {
+                escolha = scanner.nextInt();
+                if (escolha == 1 || escolha == 2) {
+                    entradaValida = true;
+                } else {
+                    System.out.println("Opção inválida. Por favor, tente novamente.");
+                }
+            } else {
+                System.out.println("Entrada inválida. Por favor, escolha uma das opções");
+                scanner.next();
+            }
+        }
+
+        System.out.println("");
 
         switch (escolha) {
             case 1:
@@ -56,7 +73,7 @@ class Jogo {
                 }
 
                 System.out.println("\nRodada do Inimigo");
-                inimigo.atacar(guerreiro);
+                inimigo.ataque(guerreiro);
 
                 if (guerreiro.estaVivo() <= 0) {
                     System.out.println("\nGuerreiro foi derrotado");
@@ -78,7 +95,7 @@ class Jogo {
                 }
 
                 System.out.println("\nRodada do Inimigo");
-                inimigo.atacar(mago);
+                inimigo.ataque(mago);
 
                 if (guerreiro.estaVivo() <= 0) {
                     System.out.println("\nMago foi derrotado");
