@@ -8,12 +8,24 @@ public class Guerreiro extends Jogador {
     public Guerreiro() { }
 
     public void ataque(Inimigo inimigo) {
-        System.out.println("Escolha seu ataque Guerreiro:");
-        System.out.println("1- Soco devastador");
-        System.out.println("2- Ataque do trovão");
-        System.out.println("3- Ataque Giratório");
-        System.out.println("4- Golpe de Espada");
-        int option = scanner.nextInt();
+        int option = 0;
+        boolean entradaValida = false;
+
+        while (!entradaValida) {
+            System.out.println("Escolha seu ataque Mago:");
+            System.out.println("1- Soco devastador");
+            System.out.println("2- Ataque do trovão");
+            System.out.println("3- Ataque Giratório");
+            System.out.println("4- Golpe de Espada");
+
+            if (scanner.hasNextInt()) {
+                option = scanner.nextInt();
+                entradaValida = true;
+            } else {
+                System.out.println("Entrada inválida. Por favor, digite um número inteiro.");
+                scanner.next();
+            }
+        }
         System.out.println("");
 
         switch (option) {
@@ -41,24 +53,5 @@ public class Guerreiro extends Jogador {
         }
     }
 
-    public void defesa(Inimigo inimigo) {
-        System.out.println("Escolha sua defesa Guerreiro:");
-        System.out.println("1- Escudo");
-        System.out.println("2- Desviar");
-        int option = scanner.nextInt();
 
-        switch (option) {
-            case 1:
-                System.out.println("Posição de defesa");
-                //defender(inimigo);
-                break;
-
-            case 2:
-                System.out.println("Você optou desviar do ataque inimigo");
-                //defender(inimigo);
-                break;
-            default:
-                System.out.println("Opção inválida!!");
-        }
-    }
 }
